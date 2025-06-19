@@ -9,8 +9,10 @@ use App\Models\Movimiento;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -19,7 +21,7 @@ class MovimientoResource extends Resource
 {
     protected static ?string $model = Movimiento::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
 
     public static function form(Form $form): Form
     {
@@ -93,11 +95,12 @@ class MovimientoResource extends Resource
                 Tables\Columns\TextColumn::make('monto')
                     ->label('Monto')
                     ->numeric(),
+
                 Tables\Columns\ImageColumn::make('foto')
                     ->label('Foto')
                     ->width(100)
-                    ->height(100)
-                    ->zoomable(),
+                    ->height(100),
+                    
                 Tables\Columns\TextColumn::make('fecha')
                     ->label('Fecha')
                     ->date()
@@ -111,11 +114,32 @@ class MovimientoResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            
             ->filters([
-                //
+                SelectFilter::make("tipo")
+                    ->options([
+                        "Ingreso" => "Ingreso",
+                        "Gasto" => "Gasto"
+                    ])
+                    ->placeholder("Filtrar por tipo")
+                    ->label("Tipo"),
             ])
+
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->button()
+                    ->color("info"),
+                
+                Tables\Actions\DeleteAction::make()
+                    ->button()
+                    ->color("danger")
+                    ->successNotification(
+                        Notification::make()
+                            ->title("Movimiento eliminado")
+                            ->body("Movimiento eliminado exitosamente")
+                            ->success()
+                    ),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

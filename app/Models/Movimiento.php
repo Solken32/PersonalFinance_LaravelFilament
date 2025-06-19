@@ -26,4 +26,19 @@ class Movimiento extends Model
         return $this->belongsTo(Categoria::class);
     }
 
+    // shif + alt + a  comentario 
+    // evento para actualizar el monto gastado cuando se crea un movimiento
+    /* protected static function updateMovement()
+    {
+        
+        static::created(function ($movimiento) {
+            $categoria = $movimiento->categoria;
+            if ($movimiento->tipo === 'Gasto') {
+                $categoria->monto_gastado += $movimiento->monto;
+            } else {
+                $categoria->monto_gastado -= $movimiento->monto;
+            }
+            $categoria->save();
+        });
+    } */
 }

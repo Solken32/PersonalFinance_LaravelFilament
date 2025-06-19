@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Filament\Resources\MovimientoResource\Pages;
+namespace App\Filament\Resources\PresupuestoResource\Pages;
 
-use App\Filament\Resources\MovimientoResource;
+use App\Filament\Resources\PresupuestoResource;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 
-class CreateMovimiento extends CreateRecord
+class CreatePresupuesto extends CreateRecord
 {
-    protected static string $resource = MovimientoResource::class;
+    protected static string $resource = PresupuestoResource::class;
 
     protected function getRedirectUrl(): string
     {
@@ -24,8 +24,8 @@ class CreateMovimiento extends CreateRecord
     protected function afterCreate()
     {
         Notification::make()
-            ->title('Movimiento creado')
-            ->body('El movimiento ha sido creado exitosamente')
+            ->title('Presupuesto creado')
+            ->body('El presupuesto ha sido creado exitosamente')
             ->success()
             ->send();
     }
