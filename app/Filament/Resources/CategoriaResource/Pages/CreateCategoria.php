@@ -33,4 +33,23 @@ class CreateCategoria extends CreateRecord
             ->send();
 
     }
+
+    protected function getFormActions(): array
+    {
+        return [
+            $this->getCreateFormAction()
+                ->label("Registrar")
+                ->color("success"),
+            
+            //$this->getCreateAnotherFormAction()
+            //    ->label("Guardar y crear otro"),
+
+            $this->getCancelFormAction()
+                ->color("danger")
+                ->label("Cancelar"),
+
+        ];
+    }
+
+
 }
